@@ -2,13 +2,15 @@ from celery import Celery
 from pathlib import Path
 from pydub import AudioSegment
 import requests
+import smtplib
 import os
 
 app = Celery( 'tasks' , broker = 'redis://localhost:6379/0' )
 
+
 @app.task(name='tasks.check')
 def check():
-    URL = "http://127.0.0.1:5000/api/forms/"
+    URL = "http://127.0.0.1:5000/api/forms/pendingToConvert"
     r = requests.get(url = URL)
     data = r.json()
 
@@ -28,6 +30,22 @@ def check():
         response = requests.put('http://127.0.0.1:5000/api/form/' + str(id_form),
         json={"state": "Convertida", "formatted": mp3_file})
         print(response)
+    
+    
+        with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+            smtp.ehlo()
+            smtp.starttls()
+            smtp.ehlo()
+
+            smtp.login('rafaelroperolayton@gmail.com', 'PONERCONTRASEÑA')
+
+            subject = "Confirmacion de publicacion de audio"
+            body = "Saludos, le informamos que el audio con el que esta participando en el concurso fue publicado satisfactoriamente"
+
+            msg = f'Subject: {subject}\n\n{body}'
+
+            smtp.sendmail('rafaelroperolayton@gmail.com', email, msg)
+
 
 app.conf.beat_schedule ={
     "run-me-every-te-seconds": {
