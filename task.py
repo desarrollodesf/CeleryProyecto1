@@ -40,14 +40,14 @@ def check():
             smtp.starttls()
             smtp.ehlo()
 
-            smtp.login('nicofrost87@gmail.com', 'PONERCONTRASEÑA')
+            smtp.login('cloudgrupo13@gmail.com', '')
 
             subject = "Confirmacion de publicacion de audio"
             body = "Saludos, le informamos que el audio con el que esta participando en el concurso fue publicado satisfactoriamente"
 
             msg = f'Subject: {subject}\n\n{body}'
 
-            smtp.sendmail('rafaelroperolayton@gmail.com', email, msg)
+            smtp.sendmail('cloudgrupo13@gmail.com', email, msg)
 
 
 app.conf.beat_schedule ={
