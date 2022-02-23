@@ -35,7 +35,7 @@ def check():
         endConv = str(datetime.strptime(datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(pytz.timezone("America/New_York")).strftime('%Y-%m-%dT%H:%M:%S'),'%Y-%m-%dT%H:%M:%S'))
 
         response = requests.put('https://172.24.41.204/api/form/' + str(id_form),
-        json={"state": "Convertida", "formatted": mp3_file, "startConvertion": startConv, "finishConversion": endConv})
+        json={"state": "Convertida", "formatted": mp3_file, "startConvertion": startConv, "finishConversion": endConv}, verify=False)
         print(response)
     
     
