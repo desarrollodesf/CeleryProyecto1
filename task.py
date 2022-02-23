@@ -6,6 +6,7 @@ import smtplib
 import os
 import datetime
 import pytz
+from urllib3.exceptions import InsecureRequestWarning
 
 app = Celery( 'tasks' , broker = 'redis://localhost:6379/0' )
 
@@ -13,7 +14,9 @@ app = Celery( 'tasks' , broker = 'redis://localhost:6379/0' )
 @app.task(name='tasks.check')
 def check():
     URL = "https://172.24.41.204/api/forms/pendingToConvert"
-    r = requests.get(url = URL)
+    requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
+
+    r = requests.get(url = URL, verify=False)
     data = r.json()
 
     for form in data:
