@@ -14,6 +14,8 @@ app = Celery( 'tasks' , broker = 'redis://localhost:6379/0' )
 @app.task(name='tasks.check')
 def check():
     URL = "https://172.24.41.204/api/forms/pendingToConvert"
+    #URL = "http://127.0.0.1:5000/api/forms/pendingToConvert"
+    
     requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
     r = requests.get(url = URL, verify=False)
@@ -35,7 +37,8 @@ def check():
         endConv = str(datetime.strptime(datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(pytz.timezone("America/New_York")).strftime('%Y-%m-%dT%H:%M:%S'),'%Y-%m-%dT%H:%M:%S'))
 
         response = requests.put('https://172.24.41.204/api/form/' + str(id_form),
-        json={"state": "Convertida", "formatted": mp3_file, "startConvertion": startConv, "finishConversion": endConv}, verify=False)
+        #response = requests.put('http://127.0.0.1:5000/api/form/' + str(id_form),
+        json={"state": "Convertida", "formatted": mp3_file, "startConversion": startConv, "finishConversion": endConv}, verify=False)
         print(response)
     
     
