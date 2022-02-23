@@ -4,13 +4,15 @@ from pydub import AudioSegment
 import requests
 import smtplib
 import os
+import datetime
+import pytz
 
 app = Celery( 'tasks' , broker = 'redis://localhost:6379/0' )
 
 
 @app.task(name='tasks.check')
 def check():
-    URL = "http://127.0.0.1:5000/api/forms/pendingToConvert"
+    URL = "https://172.24.41.204/api/forms/pendingToConvert"
     r = requests.get(url = URL)
     data = r.json()
 
@@ -24,11 +26,13 @@ def check():
         dir_name = os.path.dirname(pathOriginal)
         input_file_name = os.path.basename(pathOriginal).split('.')[0] 
         mp3_file = dir_name + "/" + input_file_name + ".mp3"
+        startConv = datetime.strptime(datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(pytz.timezone("America/New_York")).strftime('%Y-%m-%dT%H:%M:%S'),'%Y-%m-%dT%H:%M:%S')
         cmd = "ffmpeg -y -i {} {}".format(pathOriginal, mp3_file)
         os.system(cmd)
+        endConv = datetime.strptime(datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(pytz.timezone("America/New_York")).strftime('%Y-%m-%dT%H:%M:%S'),'%Y-%m-%dT%H:%M:%S')
 
-        response = requests.put('http://127.0.0.1:5000/api/form/' + str(id_form),
-        json={"state": "Convertida", "formatted": mp3_file})
+        response = requests.put('https://172.24.41.204/api/form/' + str(id_form),
+        json={"state": "Convertida", "formatted": mp3_file, "startConvertion": startConv, "finishConversion": endConv})
         print(response)
     
     
@@ -37,14 +41,14 @@ def check():
             smtp.starttls()
             smtp.ehlo()
 
-            smtp.login('rafaelroperolayton@gmail.com', 'PONERCONTRASEÑA')
+            smtp.login('cloudgrupo13@gmail.com', 'ormeefmgvsiwifzp')
 
             subject = "Confirmacion de publicacion de audio"
             body = "Saludos, le informamos que el audio con el que esta participando en el concurso fue publicado satisfactoriamente"
 
             msg = f'Subject: {subject}\n\n{body}'
 
-            smtp.sendmail('rafaelroperolayton@gmail.com', email, msg)
+            smtp.sendmail('cloudgrupo13@gmail.com', email, msg)
 
 
 app.conf.beat_schedule ={
