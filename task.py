@@ -40,7 +40,7 @@ def check():
         subject = "Confirmacion de publicacion de audio"
         body = "Saludos, le informamos que el audio con el que esta participando en el concurso fue publicado satisfactoriamente"
         msg = f'Subject: {subject}\n\n{body}'
-        sg = sendgrid.SendGridAPIClient(api_key='')
+        sg = sendgrid.SendGridAPIClient(api_key='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')
         from_email = Email('n.rozo10@uniandes.edu.co')  # Change to your verified sender
         to_email = To(email)  # Change to your recipient
         mail = Mail(from_email, to_email, subject, msg)
@@ -54,7 +54,7 @@ def check():
         print(mailresponse.headers)
         endConv = str(datetime.strptime(datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(pytz.timezone("America/New_York")).strftime('%Y-%m-%dT%H:%M:%S'),'%Y-%m-%dT%H:%M:%S'))
 
-        response = requests.put('http://144.202.144.123/api/form/' + str(id_form),
+        response = requests.put('http://44.202.144.123/api/form/' + str(id_form),
         #response = requests.put('http://127.0.0.1:5000/api/form/' + str(id_form),
         json={"state": "Convertida", "formatted": mp3_file, "startConversion": startConv, "finishConversion": endConv}, verify=False)
         print(response)
