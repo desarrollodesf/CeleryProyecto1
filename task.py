@@ -40,8 +40,8 @@ def check():
         subject = "Confirmacion de publicacion de audio"
         body = "Saludos, le informamos que el audio con el que esta participando en el concurso fue publicado satisfactoriamente"
         msg = f'Subject: {subject}\n\n{body}'
-        sg = sendgrid.SendGridAPIClient(api_key='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')
-        from_email = Email('n.rozo10@uniandes.edu.co')  # Change to your verified sender
+        sg = sendgrid.SendGridAPIClient(api_key='')
+        from_email = Email('cloudgrupo13@gmail.com')  # Change to your verified sender
         to_email = To(email)  # Change to your recipient
         mail = Mail(from_email, to_email, subject, msg)
 
