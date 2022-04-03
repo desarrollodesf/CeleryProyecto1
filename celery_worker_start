@@ -1,0 +1,18 @@
+#!/bin/bash
+ 
+ NAME="Project - celery_worker_start"
+ 
+ PROJECT_DIR=/home/ubuntu/CeleryProyecto1/
+ ENV_DIR=/home/ubuntu/CeleryProyecto1/.venv/
+ 
+ echo "Starting $NAME as `whoami`"
+ 
+ # Activate the virtual environment
+ cd "${PROJECT_DIR}"
+ 
+ if [ -d "${ENV_DIR}" ]
+ then
+     . "${ENV_DIR}bin/activate"
+ fi
+ 
+celery -A task worker -l info
