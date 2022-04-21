@@ -18,7 +18,7 @@ global conCorreo
 conCorreo = False
 
 global urlPath
-urlPath = "http://50.16.146.168/"
+urlPath = "http://Model-C-1669705240.us-east-1.elb.amazonaws.com:8001/"
 
 global esS3
 esS3 = False
