@@ -18,16 +18,16 @@ global conCorreo
 conCorreo = False
 
 global urlPath
-urlPath = "http://127.0.0.1:5000/"
+urlPath = "http://50.16.146.168/"
 
 global esS3
-esS3 = True
+esS3 = False
 
 global S3_BUCKET 
 S3_BUCKET = "grupo13s3"
 
-PATH_GUARDAR_GLOBAL = '/home/ubuntu/BackendProyecto1/'
-#PATH_GUARDAR_GLOBAL = 'D:/Nirobe/202120-Grupo07/BackendProyecto1/'
+#PATH_GUARDAR_GLOBAL = '/home/ubuntu/BackendProyecto1/'
+PATH_GUARDAR_GLOBAL = 'D:/Nirobe/202120-Grupo07/BackendProyecto1/'
 
 @app.task(name='tasks.check')
 def check():
@@ -89,21 +89,29 @@ def check():
         URL = urlPath + "api/forms/pendingToConvert"
         requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
         r = requests.get(url = URL, verify=False)
-        data = r.json()
+        form = r.json()
+        print(form)
+        #for form in data:
+        id_form = form['id']
+        print("idform " + str(id_form))
+        email = form['email']
+        print("email " +str(email))
+        name = form['name']
+        print("name " + str(name))
+        lastname = form['lastname']
+        pathOriginal = form['original']    
+        print("pathOriginal " + str(pathOriginal))
 
-        for form in data:
-            id_form = form['id']
-            email = form['email']
-            name = form['name']
-            lastname = form['lastname']
-            pathOriginal = form['original']    
-        
-            dir_name = os.path.dirname(pathOriginal)
-            input_file_name = os.path.basename(pathOriginal).split('.')[0] 
-            mp3_file = dir_name + "/" + input_file_name + ".mp3"
-            startConv = str(datetime.strptime(datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(pytz.timezone("America/New_York")).strftime('%Y-%m-%dT%H:%M:%S'),'%Y-%m-%dT%H:%M:%S'))
-            cmd = "ffmpeg -y -i {} {}".format(pathOriginal, mp3_file)
-            os.system(cmd)
+        dir_name = os.path.dirname(pathOriginal)
+        print("dir_name " + str(dir_name))
+        input_file_name = os.path.basename(pathOriginal).split('.')[0] 
+        print("input_file_name " + str(input_file_name))
+        mp3_file = dir_name + "/" + input_file_name + ".mp3"
+        print("mp3_file " + str(mp3_file))
+
+        startConv = str(datetime.strptime(datetime.utcnow().replace(tzinfo=pytz.utc).astimezone(pytz.timezone("America/New_York")).strftime('%Y-%m-%dT%H:%M:%S'),'%Y-%m-%dT%H:%M:%S'))
+        cmd = "ffmpeg -y -i {} {}".format(pathOriginal, mp3_file)
+        os.system(cmd)
 
         if conCorreo == True:
             subject = "Confirmacion de publicacion de audio"
@@ -181,6 +189,6 @@ def delete_message(receipt_handle):
 app.conf.beat_schedule ={
     "run-me-every-te-seconds": {
         "task" : "tasks.check",
-        "schedule" : 300.0
+        "schedule" : 30.0
     }
 }
