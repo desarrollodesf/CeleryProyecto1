@@ -58,7 +58,7 @@ def check():
         download_file(name, S3_BUCKET )
 
         input_file_name = os.path.basename(name).split('.')[0] 
-        name_mp3_file = "uploads/" + input_file_name + ".mp3"
+        name_mp3_file = "converted/" + input_file_name + ".mp3"
         mp3_file = PATH_GUARDAR_GLOBAL + name_mp3_file
         cmd = "ffmpeg -y -i {} {}".format(pathOriginal, mp3_file)
         os.system(cmd)
