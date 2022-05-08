@@ -18,16 +18,16 @@ global conCorreo
 conCorreo = False
 
 global urlPath
-urlPath = "http://Model-C-1669705240.us-east-1.elb.amazonaws.com:8001/"
+urlPath = "http://127.0.0.1:5000/"
 
 global esS3
-esS3 = False
+esS3 = True
 
 global S3_BUCKET 
 S3_BUCKET = "grupo13s3"
 
 #PATH_GUARDAR_GLOBAL = '/home/ubuntu/BackendProyecto1/'
-PATH_GUARDAR_GLOBAL = 'D:/Nirobe/202120-Grupo07/BackendProyecto1/'
+PATH_GUARDAR_GLOBAL = 'D:/Nirobe/202120-Grupo07/CeleryProyecto1/'
 
 @app.task(name='tasks.check')
 def check():
