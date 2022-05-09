@@ -1,1 +1,1 @@
-worker: celery worker -A tasks.app -l INFO
+worker: celery -A task worker -l info -B
