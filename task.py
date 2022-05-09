@@ -31,8 +31,8 @@ global S3_BUCKET
 S3_BUCKET = "grupo13s3"
 
 #PATH_GUARDAR_GLOBAL = '/home/ubuntu/BackendProyecto1/'
-PATH_GUARDAR_GLOBAL = 'D:/Nirobe/202120-Grupo07/CeleryProyecto1/'
-#PATH_GUARDAR_GLOBAL = '/app/'
+#PATH_GUARDAR_GLOBAL = 'D:/Nirobe/202120-Grupo07/CeleryProyecto1/'
+PATH_GUARDAR_GLOBAL = '/app/'
 
 path="uploads"
 isExist = os.path.exists(path)
