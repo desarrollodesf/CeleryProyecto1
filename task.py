@@ -12,8 +12,7 @@ from sendgrid.helpers.mail import Mail, Email, To, Content
 import json
 import boto3
 
-redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
-app = Celery( 'tasks' , broker = redis_url )
+app = Celery( 'tasks' , broker =  "redis://redistogo:75c1166cc77cc43c9d24bbf267ee5e47@tetra.redistogo.com:9741/")
 
 global conCorreo
 conCorreo = False
@@ -28,8 +27,8 @@ global S3_BUCKET
 S3_BUCKET = "grupo13s3"
 
 #PATH_GUARDAR_GLOBAL = '/home/ubuntu/BackendProyecto1/'
-PATH_GUARDAR_GLOBAL = 'D:/Nirobe/202120-Grupo07/CeleryProyecto1/'
-#PATH_GUARDAR_GLOBAL = '/app/'
+#PATH_GUARDAR_GLOBAL = 'D:/Nirobe/202120-Grupo07/CeleryProyecto1/'
+PATH_GUARDAR_GLOBAL = '/app/'
 
 path="uploads"
 isExist = os.path.exists(path)
