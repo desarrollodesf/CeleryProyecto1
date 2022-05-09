@@ -37,21 +37,6 @@ PATH_GUARDAR_GLOBAL = '/app/'
 @app.task(name='tasks.check')
 def check():
 
-    path="uploads"
-    isExist = os.path.exists(path)
-    if not isExist:
-        os.makedirs(path)
-
-    path="converted"
-    isExist = os.path.exists(path)
-    if not isExist:
-        os.makedirs(path)
-
-    path="photos"
-    isExist = os.path.exists(path)
-    if not isExist:
-        os.makedirs(path)
-
     if esS3 == True:
         URL = urlPath
         requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
