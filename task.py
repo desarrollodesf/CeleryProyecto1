@@ -28,8 +28,8 @@ global S3_BUCKET
 S3_BUCKET = "grupo13s3"
 
 #PATH_GUARDAR_GLOBAL = '/home/ubuntu/BackendProyecto1/'
-#PATH_GUARDAR_GLOBAL = 'D:/Nirobe/202120-Grupo07/CeleryProyecto1/'
-PATH_GUARDAR_GLOBAL = '/app/'
+PATH_GUARDAR_GLOBAL = 'D:/Nirobe/202120-Grupo07/CeleryProyecto1/'
+#PATH_GUARDAR_GLOBAL = '/app/'
 
 path="uploads"
 isExist = os.path.exists(path)
@@ -161,7 +161,7 @@ def upload_file(file_name, bucket, filePath):
     s3_client = boto3.client('s3', 
     aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
     aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
-    aws_session_token=os.environ['AWS_SESSION_TOKEN'],)
+    aws_session_token=os.environ['AWS_SESSION_TOKEN'])
     response = s3_client.upload_file(filePath, bucket, object_name)
 
     return response
@@ -175,7 +175,7 @@ def download_file(file_name, bucket):
     s3 = boto3.client('s3', 
     aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
     aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
-    aws_session_token=os.environ['AWS_SESSION_TOKEN'],)
+    aws_session_token=os.environ['AWS_SESSION_TOKEN'])
     s3.download_file(bucket, file_name, pathdownload)
 
     return pathdownload
@@ -185,7 +185,7 @@ def receiveMessageQueue():
     sqs_client = boto3.client('sqs', region_name = 'us-east-1', 
     aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
     aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
-    aws_session_token=os.environ['AWS_SESSION_TOKEN'],)
+    aws_session_token=os.environ['AWS_SESSION_TOKEN'])
 
     response = sqs_client.receive_message(
     QueueUrl="https://sqs.us-east-1.amazonaws.com/146202439559/MyQueue",
@@ -207,7 +207,7 @@ def delete_message(receipt_handle):
     sqs_client = boto3.client("sqs", region_name="us-east-1", 
     aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
     aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
-    aws_session_token=os.environ['AWS_SESSION_TOKEN'],)
+    aws_session_token=os.environ['AWS_SESSION_TOKEN'])
     response = sqs_client.delete_message(
         QueueUrl="https://sqs.us-east-1.amazonaws.com/146202439559/MyQueue",
         ReceiptHandle=receipt_handle,
