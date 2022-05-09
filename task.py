@@ -12,8 +12,12 @@ from sendgrid.helpers.mail import Mail, Email, To, Content
 import json
 import boto3
 
+
 app = Celery( 'tasks')
 
+app.conf.update(BROKER_URL=os.environ['REDIS_URL'],
+                CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
+                
 global conCorreo
 conCorreo = False
 
