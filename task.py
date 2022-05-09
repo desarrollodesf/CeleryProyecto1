@@ -12,7 +12,7 @@ from sendgrid.helpers.mail import Mail, Email, To, Content
 import json
 import boto3
 
-app = Celery( 'tasks' , broker =  os.getenv('REDISTOGO_URL', 'redis://localhost:6379'))
+app = Celery( 'tasks')
 
 global conCorreo
 conCorreo = False
