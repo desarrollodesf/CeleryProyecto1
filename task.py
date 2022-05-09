@@ -11,13 +11,13 @@ import sendgrid
 from sendgrid.helpers.mail import Mail, Email, To, Content
 import json
 import boto3
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+redis_url = os.environ['REDIS_URL']
+app = Celery( 'tasks' , broker = redis_url )
 
-app = Celery( 'tasks')
-
-app.conf.update(BROKER_URL=os.environ['REDIS_URL'],
-                CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
-                
 global conCorreo
 conCorreo = False
 
@@ -31,8 +31,8 @@ global S3_BUCKET
 S3_BUCKET = "grupo13s3"
 
 #PATH_GUARDAR_GLOBAL = '/home/ubuntu/BackendProyecto1/'
-#PATH_GUARDAR_GLOBAL = 'D:/Nirobe/202120-Grupo07/CeleryProyecto1/'
-PATH_GUARDAR_GLOBAL = '/app/'
+PATH_GUARDAR_GLOBAL = 'D:/Nirobe/202120-Grupo07/CeleryProyecto1/'
+#PATH_GUARDAR_GLOBAL = '/app/'
 
 path="uploads"
 isExist = os.path.exists(path)
