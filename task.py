@@ -34,23 +34,23 @@ S3_BUCKET = "grupo13s3"
 #PATH_GUARDAR_GLOBAL = 'D:/Nirobe/202120-Grupo07/CeleryProyecto1/'
 PATH_GUARDAR_GLOBAL = '/app/'
 
-path="uploads"
-isExist = os.path.exists(path)
-if not isExist:
-    os.makedirs(path)
-
-path="converted"
-isExist = os.path.exists(path)
-if not isExist:
-    os.makedirs(path)
-
-path="photos"
-isExist = os.path.exists(path)
-if not isExist:
-    os.makedirs(path)
-
 @app.task(name='tasks.check')
 def check():
+
+    path="uploads"
+    isExist = os.path.exists(path)
+    if not isExist:
+        os.makedirs(path)
+
+    path="converted"
+    isExist = os.path.exists(path)
+    if not isExist:
+        os.makedirs(path)
+
+    path="photos"
+    isExist = os.path.exists(path)
+    if not isExist:
+        os.makedirs(path)
 
     if esS3 == True:
         URL = urlPath
